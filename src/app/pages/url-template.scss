@@ -1,0 +1,116 @@
+.url-template-page {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2%;
+  justify-content: space-between;
+  gap: 10px;
+  background: white;
+  .client-footer-buttons {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .client-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #11295a;
+    }
+    .preview-heading {
+      font-size: 20px;
+      font-weight: bold;
+      color: #11295a;
+    }
+    .preview-buttons {
+      display: flex;
+      gap: 10px;
+      button {
+        border-radius: 50px;
+        height: 40px;
+      }
+    }
+  }
+  .header {
+    color: #48484a;
+    position: relative;
+    img {
+      max-width: 100%;
+      display: block;
+    }
+  }
+  .desc {
+    flex: 3;
+    color: #48484a;
+    position: relative;
+    .description-content {
+      margin: auto;
+      .se-component {
+        figure {
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          img {
+            max-width: 445px;
+          }
+        }
+      }
+    }
+  }
+  .question-form {
+    flex: 3;
+    color: #48484a;
+    position: relative;
+    padding: 1%;
+    .question-form-content {
+      max-width: 430px !important;
+      margin: auto;
+      p {
+        font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 35px;
+      }
+      .apply-preview {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: 20px;
+        button {
+          width: 80%;
+          height: 40px;
+          font-size: 16px;
+          border-radius: 0px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .sider {
+    color: #48484a;
+    display: flex;
+    .image-uploaded {
+      max-width: 100%;
+      display: block;
+    }
+  }
+  .footer-pre {
+    color: #48484a;
+    position: relative;
+    img {
+      max-width: 100%;
+      display: block;
+    }
+  }
+  .footer {
+    background-color: #11295a;
+    .preview-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      button {
+        border-radius: 50px;
+        height: 40px;
+      }
+    }
+  }
+}

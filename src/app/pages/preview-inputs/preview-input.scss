@@ -1,0 +1,19 @@
+.preview-input-container {
+  label {
+    font-weight: bold;
+    span {
+      margin-left: 3px;
+      color: red;
+    }
+  }
+  input {
+    background: white !important;
+    border-radius: 0px;
+  }
+  .ant-upload {
+    width: 100%;
+  }
+  .ant-form-item {
+    margin-bottom: 40px;
+  }
+}
