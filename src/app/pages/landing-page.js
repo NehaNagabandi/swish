@@ -127,10 +127,11 @@ const LandingPage = () => {
 
     useEffect(() => {
         if (templateURL) {
-            dispatch(templateAction.getTemplateDetails(templateURL))
+            // dispatch(templateAction.getTemplateDetails(templateURL))
+            dispatch(templateAction.getTemplateDetails(encodeURIComponent(templateURL)));
             //dispatch(templateAction.getTemplateDetails(templateURL))
         }
-    }, [])
+    }, [templateURL])
 
     return <UrlTemplate />
 };
