@@ -7,7 +7,9 @@ import UrlTemplate from './url-template';
 const LandingPage = () => {
 
     const dispatch = useDispatch()
-    const templateURL = encodeURIComponent(window.location.host + window.location.pathname);
+    const templatePath = window.location.pathname + window.location.search; // Get path and parameters
+    const templateURL = `http://${window.location.hostname}${templatePath}`;
+    // const templateURL = encodeURIComponent(window.location.host + window.location.pathname);
     console.log('templateURL',templateURL);
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
