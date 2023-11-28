@@ -7,7 +7,7 @@ import UrlTemplate from './url-template';
 const LandingPage = () => {
 
     const dispatch = useDispatch()
-    const templateURL = window.location.host;
+    const templateURL = window.location.host + window.location.pathname;
     console.log('templateURL',templateURL);
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
@@ -125,9 +125,9 @@ const LandingPage = () => {
 
     useEffect(() => {
         if (templateURL) {
-            // const encodedURI = encodeURI(templateURL)
-            // dispatch(templateAction.getTemplateDetails(encodedURI))
-            dispatch(templateAction.getTemplateDetails(templateURL))
+            const encodedURI = encodeURI(templateURL)
+            dispatch(templateAction.getTemplateDetails(encodedURI))
+            //dispatch(templateAction.getTemplateDetails(templateURL))
         }
     }, [templateURL])
 
