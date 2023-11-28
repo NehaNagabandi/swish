@@ -124,7 +124,7 @@ const LandingPage = () => {
 
 
     useEffect(() => {
-        if (c) {
+        if (templateURL) {
             dispatch(templateAction.getTemplateDetails(templateURL))
             //dispatch(templateAction.getTemplateDetails(templateURL))
         }
