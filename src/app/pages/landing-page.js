@@ -8,6 +8,7 @@ const LandingPage = () => {
 
     const dispatch = useDispatch()
     const templateURL = window.location.host;
+    console.log('templateURL',templateURL);
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
     const {
@@ -124,8 +125,9 @@ const LandingPage = () => {
 
     useEffect(() => {
         if (templateURL) {
-            const encodedURI = encodeURI(templateURL)
-            dispatch(templateAction.getTemplateDetails(encodedURI))
+            // const encodedURI = encodeURI(templateURL)
+            // dispatch(templateAction.getTemplateDetails(encodedURI))
+            dispatch(templateAction.getTemplateDetails(templateURL))
         }
     }, [templateURL])
 
