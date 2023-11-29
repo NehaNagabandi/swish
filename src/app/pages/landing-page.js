@@ -11,8 +11,7 @@ const LandingPage = () => {
     //const templateURL = `http://${window.location.hostname}${templatePath}`;
     // const templateURL = encodeURIComponent(window.location.pathname.substring(1))
     const templateURL = encodeURIComponent(window.location.ancestorOrigins[0]);
-    
-    console.log('templateURL',templateURL);
+    templateURL = templateURL.replace(/^https?:\/\//, '');
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
     const {
@@ -129,9 +128,7 @@ const LandingPage = () => {
 
     useEffect(() => {
         if (templateURL) {
-            // dispatch(templateAction.getTemplateDetails(templateURL))
             dispatch(templateAction.getTemplateDetails(templateURL));
-            //dispatch(templateAction.getTemplateDetails(templateURL))
         }
     }, [templateURL])
 
