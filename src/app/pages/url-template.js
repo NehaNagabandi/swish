@@ -191,7 +191,6 @@ const UrlTemplate = () => {
                                         dataQuestion={item}
                                         index={index}
                                         key={index}
-                                        form={form}
                                     />
                                 ))}
                                 <div className="apply-preview"><Button>Apply</Button></div>
