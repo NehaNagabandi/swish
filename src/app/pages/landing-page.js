@@ -9,7 +9,8 @@ const LandingPage = () => {
     const dispatch = useDispatch()
     //const templatePath = window.location.hostname + window.location.pathname
     //const templateURL = `http://${window.location.hostname}${templatePath}`;
-    const templateURL = encodeURIComponent(window.location.host + window.location.pathname);
+    const templateURL = encodeURIComponent(window.location.pathname.substring(1))
+    //const templateURL = encodeURIComponent(window.location.host + window.location.pathname);
     console.log('templateURL',templateURL);
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
