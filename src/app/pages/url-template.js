@@ -180,17 +180,20 @@ const UrlTemplate = () => {
                             <div className="question-form-content">
                                 <p style={{ color: questionsFontColor ? questionsFontColor : 'black' }} >Apply now</p>
                                 <PreviewInputs listChecked={listChecked} />
-                                <div className="questions-preview-content" style={{ fontWeight: "bold", fontSize: '16px', marginBottom: '10px', color: questionsFontColor && questionsFontColor }}>Questionnaire</div>
-                                {questions?.length > 0 &&
-                                    questions.map((item, index) => (
-                                        <QuestionPreview
-                                            type={item.type}
-                                            dataQuestion={item}
-                                            index={index}
-                                            key={index}
-                                        />
-                                    ))
-                                }
+                                {questions && questions.length > 0 && (
+                                    <div className="questions-preview-content" style={{ fontWeight: "bold", fontSize: '16px', marginBottom: '10px', color: questionsFontColor && questionsFontColor }}>
+                                        Questionnaire
+                                    </div>
+                                )}
+                                {questions && questions.length > 0 && questions.map((item, index) => (
+                                    <QuestionPreview
+                                        type={item.type}
+                                        dataQuestion={item}
+                                        index={index}
+                                        key={index}
+                                        form={form}
+                                    />
+                                ))}
                                 <div className="apply-preview"><Button>Apply</Button></div>
                             </div>
                         </div>
