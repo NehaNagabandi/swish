@@ -15,7 +15,39 @@ const getTemplateDetails = (url) => {
     }
 }
 
+const uploadCv = (url, cbSuccess, cbFail) => {
+    return (dispatch) => {
+        dispatch(requestAction.requestWithoutPayload(templateConstants.UPLOAD_RESUME_REQUEST, true));
+        templateService.uploadCv(url)
+            .then((res) => {
+                cbSuccess(res)
+                dispatch(successAction(templateConstants.UPLOAD_RESUME_SUCCESS, res))
+            })
+            .catch((res) => {
+                cbFail(res)
+                dispatch(failureAction(templateConstants.UPLOAD_RESUME_FAILURE, res))
+            })
+    }
+}
+
+const applyJob = (data, cbSuccess, cbFail) => {
+    return (dispatch) => {
+        dispatch(requestAction.requestWithoutPayload(templateConstants.APPLY_JOB_REQUEST, true));
+        templateService.applyJob(data)
+            .then((res) => {
+                cbSuccess(res)
+                dispatch(successAction(templateConstants.APPLY_JOB_SUCCESS, res))
+            })
+            .catch((res) => {
+                cbFail(res)
+                dispatch(failureAction(templateConstants.APPLY_JOB_FAILURE, res))
+            })
+    }
+}
+
 
 export const templateAction = {
-    getTemplateDetails
+    getTemplateDetails,
+    uploadCv,
+    applyJob
 }

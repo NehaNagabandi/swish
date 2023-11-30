@@ -6,10 +6,7 @@ const TemplateContext = ({ children }) => {
 
 
   const [openModal, setOpenModal] = useState(false);
-  const [landingURL, setLandingURL] = useState("");
-  const [templateBtn, setTemplateBtn] = useState(true);
-  const [atsBtn, setAtsBtn] = useState(true);
-  const [applicantsBtn, setapplicantsBtn] = useState(true);
+
   const [headerResizableHeight, setHeaderResizableHeight] = useState();
   const [headerResizableWidth, setHeaderResizableWidth] = useState();
   const [headerUploadedImage, setHeaderUploadedImage] = useState(null);
@@ -40,79 +37,13 @@ const TemplateContext = ({ children }) => {
 
   const [listChecked, setListChecked] = useState([]);
   const [templateData, setTemplateData] = useState(null)
-
-  const [imagesName, setImagesName] = useState({
-    header: '',
-    footer: '',
-    siderLeft: '',
-    siderRight: ''
-  })
-
-  const showTemplate = () => {
-    setTemplateBtn(true);
-    setAtsBtn(false);
-    setapplicantsBtn(false);
-  };
-  const showAtsDetails = () => {
-    setTemplateBtn(false);
-    setAtsBtn(true);
-    setapplicantsBtn(false);
-  };
-  const showApplicants = () => {
-    setTemplateBtn(false);
-    setAtsBtn(false);
-    setapplicantsBtn(true);
-  };
-
-  const clearTemplateStates = () => {
-
-    setHeaderUploadedImage(null);
-    setHeaderResizableHeight(0);
-    setHeaderResizableWidth(0);
-    setHeaderAlignment('center');
-
-    setSiderLeftResizableHeight(0);
-    setSiderLeftResizableWidth(0);
-    setSiderLeftAlignment('center');
-    setSiderLeftUploadedImage(null);
-
-    setSiderRightAlignment('center');
-    setSiderRightResizableHeight(0);
-    setSiderRightResizableWidth(0);
-    setSiderRightUploadedImage(null);
-
-    setFooterAlignment('center');
-    setFooterResizableHeight(0);
-    setFooterResizableWidth(0);
-    setFooterUploadedImage(null);
-
-    setDescValue("");
-    setImagesName({
-      header: '',
-      footer: '',
-      siderLeft: '',
-      siderRight: ''
-    });
-
-    setBackgroundColor(null);
-  };
-
+  const [uploadedCvURL, setUploadedCvURL] = useState(null)
 
   return (
     <TemplateContextProvider.Provider
       value={{
         openModal, 
         setOpenModal,
-        templateBtn,
-        setTemplateBtn,
-        atsBtn,
-        setAtsBtn,
-        applicantsBtn,
-        setapplicantsBtn,
-        showTemplate,
-        showAtsDetails,
-        showApplicants,
-        clearTemplateStates,
         headerResizableHeight,
         setHeaderResizableHeight,
         headerResizableWidth,
@@ -153,8 +84,6 @@ const TemplateContext = ({ children }) => {
         setDescValue,
         descWidth, 
         setDescWidth,
-        imagesName, 
-        setImagesName,
         descriptionBackgroundColor, 
         setDescriptionBackgroundColor,
         questionBackgroundColor, 
@@ -163,12 +92,12 @@ const TemplateContext = ({ children }) => {
         setQuestionsFontColor,
         listChecked, 
         setListChecked,
-        landingURL, 
-        setLandingURL,
         templateData, 
         setTemplateData,
         questions, 
-        setQuestions
+        setQuestions,
+        uploadedCvURL, 
+        setUploadedCvURL
       }}
     >
       {children}

@@ -1,14 +1,16 @@
-import { Button } from "antd";
+import { Button, Form, notification } from "antd";
 import React, { useContext } from "react";
 import parse from "html-react-parser";
 import QuestionPreview from "./questions/QuestionPreview";
 import { TemplateContextProvider } from "../contexts/TemplateContext";
 import PreviewInputs from "./preview-inputs/preview-inputs";
+import { useDispatch } from "react-redux";
 import "./url-template.scss";
+import { templateAction } from "../../actions/template-action";
 
 
 const UrlTemplate = () => {
-
+    const dispatch = useDispatch();
     const {
         headerResizableHeight,
         headerUploadedImage,
@@ -33,7 +35,9 @@ const UrlTemplate = () => {
         questionsFontColor,
         descWidth,
         listChecked,
-        questions
+        questions,
+        templateData,
+        uploadedCvURL,
     } = useContext(TemplateContextProvider);
 
 
@@ -135,6 +139,55 @@ const UrlTemplate = () => {
                 };
         }
     };
+    const getQuestionAnswer = (questions) => {
+        const data = [];
+        questions.forEach(item => {
+            if (item.type === 1) {
+                data.push({
+                    questionId: item.id,
+                    optionId: null,
+                    answerText: item.answerText || ''
+                });
+            } else {
+                const optionsData = item.optionQuestions
+                    .filter(option => option.isAnswer)
+                    .map(option => ({
+                        questionId: item.id,
+                        optionId: option.id,
+                        answerText: option.name || ''
+                    }));
+                data.push(...optionsData);
+            }
+        });
+        return { applicantAnswer: data };
+    };
+    const applyJobSuccces = (res) => {
+        notification.success({
+            message: 'Job Application Submitted succesfully'
+        })
+    }
+    const applyJobFailure = (res) => {
+        notification.error({
+            message: res?.response?.data?.message
+        })
+    }
+
+    const onFinish = (values) => {
+        let data = {
+            ...values,
+            templateId: templateData?.id,
+            cvUrl: uploadedCvURL,
+        };
+
+        let questionsData = getQuestionAnswer(questions);
+        if (questionsData) {
+            data = {
+                ...data,
+                applicantAnswer: questionsData.applicantAnswer,
+            };
+        }
+        dispatch(templateAction.applyJob(data, applyJobSuccces, applyJobFailure));
+    };
 
     return (
         <div
@@ -179,21 +232,25 @@ const UrlTemplate = () => {
                         <div className="question-form" style={{ background: questionBackgroundColor && questionBackgroundColor }}>
                             <div className="question-form-content">
                                 <p style={{ color: questionsFontColor ? questionsFontColor : 'black' }} >Apply now</p>
-                                <PreviewInputs listChecked={listChecked} />
-                                {questions && questions.length > 0 && (
-                                    <div className="questions-preview-content" style={{ fontWeight: "bold", fontSize: '16px', marginBottom: '10px', color: questionsFontColor && questionsFontColor }}>
-                                        Questionnaire
-                                    </div>
-                                )}
-                                {questions && questions.length > 0 && questions.map((item, index) => (
-                                    <QuestionPreview
-                                        type={item.type}
-                                        dataQuestion={item}
-                                        index={index}
-                                        key={index}
-                                    />
-                                ))}
-                                <div className="apply-preview"><Button>Apply</Button></div>
+                                <Form name="applyForm" onFinish={onFinish} layout="vertical">
+                                    <PreviewInputs listChecked={listChecked} />
+                                    {questions && questions.length > 0 && (
+                                        <div className="questions-preview-content" style={{ fontWeight: "bold", fontSize: '16px', marginBottom: '10px', color: questionsFontColor && questionsFontColor }}>
+                                            Questionnaire
+                                        </div>
+                                    )}
+                                    {questions && questions.length > 0 && questions.map((item, index) => (
+                                        <QuestionPreview
+                                            type={item.type}
+                                            dataQuestion={item}
+                                            index={index}
+                                            key={index}
+                                        />
+                                    ))}
+                                    <Form.Item>
+                                        <div className="apply-preview"><Button htmlType="submit">Apply</Button></div>
+                                    </Form.Item>
+                                </Form>
                             </div>
                         </div>
                         {siderRightUploadedImage && (

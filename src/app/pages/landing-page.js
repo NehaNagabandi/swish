@@ -8,7 +8,12 @@ const LandingPage = () => {
 
     const dispatch = useDispatch()
     let templateURL = window.location.ancestorOrigins[0];
-    templateURL = templateURL.replace(/^https?:\/\//, '');
+    if (templateURL !== undefined) {
+        templateURL = templateURL.replace(/^https?:\/\//, '');
+    } else {
+        templateURL = window.location.pathname.substring(1)
+    }
+
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
     const {
@@ -36,12 +41,11 @@ const LandingPage = () => {
         setFooterResizableWidth,
         setFooterAlignment,
         setListChecked,
-        setLandingURL,
 
         setQuestionBackgroundColor,
         setDescriptionBackgroundColor,
         setQuestionsFontColor,
-        setQuestions
+        setQuestions,
 
     } = useContext(TemplateContextProvider);
 
@@ -73,7 +77,7 @@ const LandingPage = () => {
                     default:
                         return '';
                 }
-            }).filter(item => item !== ''); // Remove empty items
+            }).filter(item => item !== '');
             return selectedKeys;
         }
         return [];
@@ -115,10 +119,7 @@ const LandingPage = () => {
 
             const selectedKeys = setContactInfoGet(templateDetailsData);
             setListChecked(selectedKeys);
-
             setQuestions(templateDetailsData?.questions);
-
-            setLandingURL(templateDetailsData?.templateUrl);
         }
     }, [templateDetailsData])
 

@@ -5,12 +5,10 @@ import { TemplateContextProvider } from '../../contexts/TemplateContext';
 
 const QuestionPreview = ({ dataQuestion, type, index }) => {
 
-
-    const { questionsFontColor } = useContext(TemplateContextProvider);
-
+    const { questionsFontColor, questions, setQuestions } = useContext(TemplateContextProvider);
     const [checkBoxAnswers, setCheckBoxAnswers] = useState([]);
-    const [radioAnswer, setRadioAnswer] = useState('')
-    const [answerText, setAnswerText] = useState('');
+    const [radioAnswer, setRadioAnswer] = useState()
+    const [answerText, setAnswerText] = useState();
 
     const getOptions = () => {
         const options = dataQuestion?.optionQuestions;
@@ -61,29 +59,78 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
         }
     }, [dataQuestion]);
 
-
     switch (type) {
         case 1:
+            const handleInputChange = (e) => {
+                const requiredQuestion = questions.find(question => question.id === dataQuestion.id);
+                const updatedQuestion = {
+                    ...requiredQuestion,
+                    answerText: e.target.value
+                };
+                setQuestions(prevQuestions => prevQuestions.map(question => {
+                    if (question.id === updatedQuestion.id) {
+                        return updatedQuestion;
+                    }
+                    return question;
+                }));
+                setAnswerText(e.target.value);
+            };
             return (
                 <div style={styleContainer}>
                     <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
-                    <Input readOnly placeholder="Your answer here" className="textArea" style={{ borderRadius: '0px', color: questionsFontColor && questionsFontColor }} value={answerText} />
+                    <Input placeholder="Your answer here" onChange={handleInputChange} className="textArea" style={{ borderRadius: '0px', color: questionsFontColor && questionsFontColor }} value={answerText} />
                 </div>
             )
 
         case 2:
+            const radioChange = (e) => {
+                const requiredQuestion = questions.find(question => question.id === dataQuestion.id);
+                const requiredQuestionOptions = requiredQuestion.optionQuestions.map(option => ({
+                    ...option,
+                    isAnswer: e.target.value == option.name
+                }));
+                const updatedQuestion = {
+                    ...requiredQuestion,
+                    optionQuestions: requiredQuestionOptions
+                };
+                setQuestions(prevQuestions => prevQuestions.map(question => {
+                    if (question.id === updatedQuestion.id) {
+                        return updatedQuestion;
+                    }
+                    return question;
+                }));
+                setRadioAnswer(e.target.value);
+            };
             return (
                 <div style={styleContainer}>
                     <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
-                    <Radio.Group style={groupStyle} options={getOptions()} value={radioAnswer} className='radioArea' />
+                    <Radio.Group style={groupStyle} options={getOptions()} onChange={radioChange} value={radioAnswer} className='radioArea' />
                 </div>
             )
 
         case 3:
+            const checkBoxChange = (checkedValues) => {
+                const requiredQuestion = questions.find(question => question.id === dataQuestion.id);
+                const requiredQuestionOptions = requiredQuestion.optionQuestions.map(option => ({
+                    ...option,
+                    isAnswer: checkedValues.includes(option.name)
+                }));
+                const updatedQuestion = {
+                    ...requiredQuestion,
+                    optionQuestions: requiredQuestionOptions
+                };
+                setQuestions(prevQuestions => prevQuestions.map(question => {
+                    if (question.id === updatedQuestion.id) {
+                        return updatedQuestion;
+                    }
+                    return question;
+                }));
+                setCheckBoxAnswers(checkedValues)
+            }
             return (
                 <div style={styleContainer}>
                     <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
-                    <Checkbox.Group style={groupStyle} className='checkbox-area' options={getOptions()} value={checkBoxAnswers} />
+                    <Checkbox.Group style={groupStyle} className='checkbox-area' onChange={checkBoxChange} options={getOptions()} value={checkBoxAnswers} />
                 </div>
             );
 
