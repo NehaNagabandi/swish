@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-      <Route exact path="/:template" element={<LandingPage />} />
+      <Route exact path="" element={<LandingPage />} />
       </Routes>
     </Router>
   );
