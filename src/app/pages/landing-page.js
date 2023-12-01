@@ -47,6 +47,8 @@ const LandingPage = () => {
         setQuestionsFontColor,
         setQuestions,
 
+        setDescWidth,
+
     } = useContext(TemplateContextProvider);
 
 
@@ -112,6 +114,7 @@ const LandingPage = () => {
             setSiderRightAlignment(siderRight?.alignment ? siderRight?.alignment : 'center');
 
             setDescValue(templateDetailsData?.description);
+            setDescWidth(descriptionStyles?.descriptionWidth)
 
             setDescriptionBackgroundColor(descriptionStyles?.backgroundColor);
             setQuestionBackgroundColor(questionFormStyle?.backgroundColor);
