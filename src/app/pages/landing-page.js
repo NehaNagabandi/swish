@@ -7,7 +7,7 @@ import UrlTemplate from './url-template';
 const LandingPage = () => {
 
     const dispatch = useDispatch()
-    let templateURL = window.location.ancestorOrigins?.[0];
+    let templateURL = window.location.ancestorOrigins?.[0]+window.location.pathname;
     if (templateURL !== undefined) {
         templateURL = templateURL.replace(/^https?:\/\//, '');
     } else {
