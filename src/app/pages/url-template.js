@@ -229,7 +229,7 @@ const UrlTemplate = () => {
                                 {parse(`${descValue}`)}
                             </div>
                         </div>
-                        <div className="question-form" style={{ background: questionBackgroundColor && questionBackgroundColor }}>
+                        <div className="question-form" style={{ background: questionBackgroundColor ? questionBackgroundColor : 'white' }}>
                             <div className="question-form-content" style={{ maxWidth: descWidth && `${descWidth}px` }}>
                                 <p style={{ color: questionsFontColor ? questionsFontColor : 'black' }} >Apply now</p>
                                 <Form name="applyForm" onFinish={onFinish} layout="vertical">

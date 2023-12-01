@@ -9,7 +9,7 @@ import './preview-input.scss';
 export default function PreviewInputs({ listChecked }) {
 
     const dispatch = useDispatch();
-    const { questionsFontColor } = useContext(TemplateContextProvider);
+    const { questionsFontColor, setUploadedCvURL } = useContext(TemplateContextProvider);
     const [fileList, setFileList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [imageDisplay, setImageDisplay] = useState(false);
@@ -29,6 +29,7 @@ export default function PreviewInputs({ listChecked }) {
 
     const uploadSuccess = (res) => {
         setLoading(false);
+        setUploadedCvURL(res?.data?.Location)
         setImageDisplay(true)
         notification.success({
             message: 'upload successful'
