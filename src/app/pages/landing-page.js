@@ -14,6 +14,8 @@ const LandingPage = () => {
         templateURL = window.location.pathname.substring(1)
     }
 
+    console.log(templateURL, 'bhargav')
+
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
     const {

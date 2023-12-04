@@ -6,6 +6,7 @@ import { TemplateContextProvider } from '../../contexts/TemplateContext';
 const QuestionPreview = ({ dataQuestion, type, index }) => {
 
     const { questionsFontColor, questions, setQuestions } = useContext(TemplateContextProvider);
+    const [updatedDataQuestion, setUpdatedDataQuestion] = useState(null);
     const [checkBoxAnswers, setCheckBoxAnswers] = useState([]);
     const [radioAnswer, setRadioAnswer] = useState()
     const [answerText, setAnswerText] = useState();
@@ -20,19 +21,42 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
         }
     }
 
-    const getOnlySelected = () => {
-        const selectedItems = dataQuestion?.optionQuestions?.filter(item => item?.isAnswer === true)?.map(item => item?.name);
-        return selectedItems;
+
+    const showQuestionLogic = (dataQuestion) => {
+        if (type == 1) {
+            if (dataQuestion.hasOwnProperty('name') && dataQuestion['name'] !== "") {
+                setUpdatedDataQuestion(dataQuestion)
+            } else {
+                setUpdatedDataQuestion(null)
+            }
+        } else {
+            const options = dataQuestion?.optionQuestions;
+            const filteredOptions = options?.filter(item => item.hasOwnProperty('name') && item['name'] !== "");
+            const newQuestion = {
+                ...dataQuestion,
+                optionQuestions: filteredOptions ? filteredOptions : []
+            }
+            setUpdatedDataQuestion(newQuestion);
+        }
     }
+
+    useEffect(() => {
+        showQuestionLogic(dataQuestion)
+    }, [dataQuestion]);
+
+
+
+    // const getOnlySelected = () => {
+    //     const selectedItems = dataQuestion?.optionQuestions?.filter(item => item?.isAnswer === true)?.map(item => item?.name);
+    //     return selectedItems;
+    // }
 
     const labelStyle = { marginBottom: '6px', color: questionsFontColor && questionsFontColor }
     const groupStyle = { display: 'flex', gap: '50px', color: questionsFontColor && questionsFontColor }
     const styleContainer = { marginBottom: '25px', }
 
     useEffect(() => {
-        if (type === 1) {
-            setAnswerText(dataQuestion?.answerText ? dataQuestion?.answerText : "");
-        } else if (type === 2) {
+        if (type === 2) {
             const radioArea = document.querySelector('.radioArea');
             if (radioArea) {
                 const radios = radioArea.querySelectorAll('.ant-radio-wrapper');
@@ -40,10 +64,10 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
                     radios[i].style.color = questionsFontColor && questionsFontColor;
                 }
             }
-            const selectedOnly = getOnlySelected();
-            if (selectedOnly?.length > 0) {
-                setRadioAnswer(selectedOnly[0]);
-            }
+            // const selectedOnly = getOnlySelected();
+            // if (selectedOnly?.length > 0) {
+            //     setRadioAnswer(selectedOnly[0]);
+            // }
         } else {
             const checkboxArea = document.querySelector('.checkbox-area');
             if (checkboxArea) {
@@ -52,10 +76,10 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
                     checkBoxes[i].style.color = questionsFontColor && questionsFontColor;
                 }
             }
-            const selectedOnly = getOnlySelected();
-            if (selectedOnly?.length > 0) {
-                setCheckBoxAnswers(selectedOnly);
-            }
+            // const selectedOnly = getOnlySelected();
+            // if (selectedOnly?.length > 0) {
+            //     setCheckBoxAnswers(selectedOnly);
+            // }
         }
     }, [dataQuestion]);
 
@@ -76,10 +100,12 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
                 setAnswerText(e.target.value);
             };
             return (
-                <div style={styleContainer}>
-                    <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
-                    <Input placeholder="Your answer here" onChange={handleInputChange} className="textArea" style={{ borderRadius: '0px', color: questionsFontColor && questionsFontColor }} value={answerText} />
-                </div>
+                updatedDataQuestion?.hasOwnProperty('name') && updatedDataQuestion['name'] !== "" ? (
+                    <div style={styleContainer}>
+                        <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
+                        <Input placeholder="Your answer here" onChange={handleInputChange} className="textArea" style={{ borderRadius: '0px', color: questionsFontColor && questionsFontColor }} value={answerText} />
+                    </div>
+                ) : null
             )
 
         case 2:
@@ -102,10 +128,12 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
                 setRadioAnswer(e.target.value);
             };
             return (
-                <div style={styleContainer}>
-                    <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
-                    <Radio.Group style={groupStyle} options={getOptions()} onChange={radioChange} value={radioAnswer} className='radioArea' />
-                </div>
+                updatedDataQuestion?.optionQuestions?.length > 0 && (
+                    <div style={styleContainer}>
+                        <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
+                        <Radio.Group style={groupStyle} options={getOptions()} onChange={radioChange} value={radioAnswer} className='radioArea' />
+                    </div>
+                )
             )
 
         case 3:
@@ -128,10 +156,12 @@ const QuestionPreview = ({ dataQuestion, type, index }) => {
                 setCheckBoxAnswers(checkedValues)
             }
             return (
-                <div style={styleContainer}>
-                    <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
-                    <Checkbox.Group style={groupStyle} className='checkbox-area' onChange={checkBoxChange} options={getOptions()} value={checkBoxAnswers} />
-                </div>
+                updatedDataQuestion?.optionQuestions?.length > 0 && (
+                    <div style={styleContainer}>
+                        <div style={labelStyle}>{`Q ${index + 1}. ${dataQuestion?.name ? dataQuestion?.name : ''}`}</div>
+                        <Checkbox.Group style={groupStyle} className='checkbox-area' onChange={checkBoxChange} options={getOptions()} value={checkBoxAnswers} />
+                    </div>
+                )
             );
 
         default:
