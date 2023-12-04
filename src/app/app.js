@@ -9,6 +9,7 @@ const App = () => {
     <Router>
       <Routes>
       <Route exact path="" element={<LandingPage />} />
+      <Route exact path="/:sub" element={<LandingPage />} />
       </Routes>
     </Router>
   );
