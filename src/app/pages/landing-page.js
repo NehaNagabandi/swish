@@ -7,15 +7,16 @@ import UrlTemplate from './url-template';
 const LandingPage = () => {
 
     const dispatch = useDispatch()
-    let templateURL = window.location.ancestorOrigins?.[0];
-    let search  = window.location.search
+    let templateURL = window.location.href;
+    let templateURL1 = window.location.ancestorOrigins?.[0] ;
     if (templateURL !== undefined) {
         templateURL = templateURL.replace(/^https?:\/\//, '');
     } else {
         templateURL = window.location.pathname.substring(1)
     }
 
-    console.log(templateURL, search, 'bhargav')
+    console.log(templateURL, 'bhargav')
+    console.log(templateURL1, 'bhargav1')
 
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
