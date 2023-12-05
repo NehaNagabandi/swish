@@ -14,6 +14,7 @@ const LandingPage = () => {
         templateURL = window.location.pathname.substring(1)
     }
 
+    console.log(window.location?.ancestorOrigins?.[0], 'bhargav ance')
     console.log(window.location, 'bhargav')
 
 
