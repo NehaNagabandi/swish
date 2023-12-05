@@ -9,14 +9,26 @@ const LandingPage = () => {
     const dispatch = useDispatch()
     let templateURL = window.location.href;
     let templateURL1 = window.location.ancestorOrigins?.[0] ;
+    let templateURL2 = window.location
     if (templateURL !== undefined) {
         templateURL = templateURL.replace(/^https?:\/\//, '');
     } else {
         templateURL = window.location.pathname.substring(1)
     }
 
-    console.log(templateURL, 'bhargav')
-    console.log(templateURL1, 'bhargav1')
+
+    useEffect(() => {
+        if (templateURL) {
+            dispatch(templateAction.getTemplateDetails(encodeURIComponent(templateURL)));
+        }
+    }, [templateURL])
+
+
+    setTimeout(()=>{
+        const templateURL = window.location.href;
+        console.log(templateURL, 'bhargav')
+        //dispatch(templateAction.getTemplateDetails(encodeURIComponent(templateURL)));
+    },3000)
 
     const templateDetailsData = useSelector(state => state.getTemplateDetailsReducer?.data)
 
@@ -129,13 +141,6 @@ const LandingPage = () => {
             setQuestions(templateDetailsData?.questions);
         }
     }, [templateDetailsData])
-
-
-    useEffect(() => {
-        if (templateURL) {
-            dispatch(templateAction.getTemplateDetails(encodeURIComponent(templateURL)));
-        }
-    }, [templateURL])
 
     return <UrlTemplate />
 };
