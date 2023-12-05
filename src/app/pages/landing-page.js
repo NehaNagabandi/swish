@@ -14,6 +14,8 @@ const LandingPage = () => {
         templateURL = window.location.pathname.substring(1)
     }
 
+    console.log(window.location, 'bhargav')
+
 
     useEffect(() => {
         if (templateURL) {
