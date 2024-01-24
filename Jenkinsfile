@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
         DOCKER_TAG = "${currentBuild.number}"
-        PROJECT = "frontend"
+        PROJECT = "frontend-dev"
     }
     stages {
         stage ("docker build") {
