@@ -3,8 +3,11 @@ pipeline {
         label 'neha'
     }
     stages {
-        stage ('docker build') {
-            sh "docker build -t frontend ."
+        stage ("docker build") {
+            steps {
+                sh "docker build -t frontend ."
+            }
+            
         }
     }
 }
