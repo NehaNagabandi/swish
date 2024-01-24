@@ -3,7 +3,7 @@ pipeline {
         label 'neha'
     }
     environment {
-        DOCKER_TAG = "${currentBuild.number}
+        DOCKER_TAG = "${currentBuild.number}"
         PROJECT = "frontend"
     }
     stages {
