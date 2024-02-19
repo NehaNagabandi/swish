@@ -21,10 +21,10 @@ pipeline {
                 sh "docker system prune -af"
             }
         }
-        stage ("deploy in k8s") {
-            steps {
+        // stage ("deploy in k8s") {
+        //     steps {
                 
-            }
-        }
+        //     }
+        // }
     }
 }
