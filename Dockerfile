@@ -9,7 +9,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY nginx-selfsigned.crt /etc/nginx/nginx-selfsigned.crt
-COPY nginx-selfsigned.key /etc/nginx/nginx-selfsigned.key
+# COPY nginx-selfsigned.crt /etc/nginx/nginx-selfsigned.crt
+# COPY nginx-selfsigned.key /etc/nginx/nginx-selfsigned.key
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
