@@ -22,7 +22,7 @@ pipeline {
             }
         }
         // stage ("deploy in k8s") {
-        //     steps {
+        //     steps {neha123
                 
         //     }
         // }
